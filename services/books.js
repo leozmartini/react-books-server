@@ -1,4 +1,4 @@
-const { log } = require("console");
+const { dirxml } = require("console");
 const fs = require("fs");
 
 function getAllBooks() {
@@ -28,9 +28,19 @@ function editBook(edits, id) {
 
 }
 
+function deleteBookById(id) {
+    const books = JSON.parse(fs.readFileSync("books.json"));
+
+    const filtredBooks = books.filter(book => book.id !== id)
+
+    fs.writeFileSync("books.json", JSON.stringify(filtredBooks))
+
+}
+
 module.exports = {
     getAllBooks,
     getBookById,
     insertBook,
-    editBook
+    editBook,
+    deleteBookById
 }
