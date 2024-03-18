@@ -1,4 +1,5 @@
 const { getAllBooks, getBookById, insertBook, editBook, deleteBookById } = require("../services/books");
+const { isIDPresent } = require("../services/validations");
 
 
 function getBooks(req, res) {
@@ -14,8 +15,15 @@ function getBooks(req, res) {
 function getBook(req, res) {
     try {
         const id = req.params.id
-        const book = getBookById(id)
-        res.send(book)
+        const books = getAllBooks()
+
+        if (isIDPresent(id, books)) {
+            const book = getBookById(id)
+            res.send(book)
+        } else {
+            res.status(404)
+            res.send("ID não encontrado no banco de dados.")
+        }
     } catch (error) {
         res.status(500);
         res.send(error.message)
@@ -34,8 +42,17 @@ function postBook(req, res) {
 
 function patchBook(req, res) {
     try {
-        editBook(req.body, req.params.id)
-        res.send("Editado com sucesso.")
+        const id = req.params.id
+        const books = getAllBooks()
+
+        if (isIDPresent(id, books)) {
+            editBook(req.body, id)
+            res.send("Editado com sucesso.")
+        } else {
+            res.status(404)
+            res.send("Id não encontrado no banco de dados.")
+        }
+        
     } catch (error) {
         res.send(error.message)
     }
@@ -43,8 +60,18 @@ function patchBook(req, res) {
 
 function deleteBook(req, res) {
     try {
-        deleteBookById(req.params.id)
-        res.send("Deletado com sucesso")
+        const id = req.params.id
+        const books = getAllBooks()
+
+        if (isIDPresent(id, books)) {
+            deleteBookById(req.params.id)
+
+            res.send("Deletado com sucesso.")
+        } else {
+            res.status(404)
+            res.send("Id não encontrado no banco de dados.")
+        }
+
     } catch (error) {
         res.send(error.message)
     }
