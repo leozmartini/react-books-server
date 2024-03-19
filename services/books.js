@@ -1,4 +1,3 @@
-const { dirxml } = require("console");
 const fs = require("fs");
 
 function getAllBooks() {
