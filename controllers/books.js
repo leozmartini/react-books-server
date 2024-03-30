@@ -33,7 +33,7 @@ function postBook(req, res) {
     try {
         if (!req.body.id) { res.status(422); res.send("Campo id é obrigatório.") }
         if (isIDPresent(req.body.id, booksDataBase)) { res.status(409); res.send("Este ID já está presente no banco de dados."); return}
-        if (!req.body.nome) { res.status(422); res.send("Campo nome é obrigatório."); return }
+        if (!req.body.name) { res.status(422); res.send("Campo nome é obrigatório."); return }
 
         insertBook(req.body)
         res.status(201)

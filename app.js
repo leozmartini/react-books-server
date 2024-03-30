@@ -1,11 +1,12 @@
 const express = require('express');
 const bookRouter = require("./routes/books")
-
-const app = express();
+const cors = require("cors")
 
 const port = 8000;
 
+const app = express();
 app.use(express.json())
+app.use(cors({origin: "*"}))
 
 app.get('/', (req, res) => {
     res.send('Hello world')
