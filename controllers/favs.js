@@ -1,4 +1,5 @@
 const { getAllFavs, insertFav, deleteFavsByID } = require("../services/favs");
+const { getAllBooks } = require("../services/books");
 const { isIDPresent } = require("../services/validations");
 
 function getFavs(req, res) {
@@ -15,8 +16,10 @@ function postFav(req, res) {
     try {
         const id = req.params.id
         const favs = getAllFavs()
+        const books = getAllBooks()
 
         if (isIDPresent(id, favs)) { res.status(409); res.send("O ID já pertence aos favoritos."); return}
+        if (!isIDPresent(id, books)) { res.status(404); res.send("ID não encontrado no banco de dados."); return}
             
         insertFav(id)
         res.status(201)
