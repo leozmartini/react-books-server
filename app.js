@@ -1,6 +1,8 @@
 const express = require('express');
-const bookRouter = require("./routes/books")
 const cors = require("cors")
+
+const bookRouter = require("./routes/books")
+const favsRouter = require("./routes/favs")
 
 const port = 8000;
 
@@ -13,6 +15,7 @@ app.get('/', (req, res) => {
 })
 
 app.use('/books', bookRouter)
+app.use('/favs', favsRouter)
 
 app.listen(port, () => {
     console.log(`Online na porta: ${port}`)
